@@ -11,28 +11,31 @@ export default function Navbar({
       background: scrolled ? "rgba(250,246,237,0.95)" : "transparent",
       backdropFilter: scrolled ? "blur(12px)" : "none",
       transition: "all 0.3s",
-      borderBottom: scrolled ? `1px solid ${theme.creamDark}` : "1px solid transparent"
+      borderBottom: scrolled ? `1px solid ${theme.creamDark}` : "1px solid transparent",
+      width: "100%", boxSizing: "border-box"
     }}>
       <div style={{
-        maxWidth: 1200, margin: "0 auto", padding: "0 24px",
-        display: "flex", alignItems: "center", height: 72
+        maxWidth: 1200, margin: "0 auto", padding: "0 16px",
+        display: "flex", alignItems: "center", height: 64,
+        width: "100%", boxSizing: "border-box"
       }}>
 
         {/* Logo */}
         <div
           onClick={() => setView("home")}
-          style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: 10, marginRight: "auto" }}
+          style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: 8, marginRight: "auto", minWidth: 0 }}
         >
-          <span style={{ fontSize: 28 }}>🌿</span>
-          <div>
+          <span style={{ fontSize: 24, flexShrink: 0 }}>🌿</span>
+          <div style={{ minWidth: 0 }}>
             <div style={{
-              fontFamily: "'Crimson Pro', serif", fontSize: 22,
-              fontWeight: 600, color: theme.green, lineHeight: 1
+              fontFamily: "'Crimson Pro', serif", fontSize: 18,
+              fontWeight: 600, color: theme.green, lineHeight: 1,
+              whiteSpace: "nowrap"
             }}>
               CampoFresco
             </div>
-            <div style={{
-              fontFamily: "'Outfit', sans-serif", fontSize: 10,
+            <div className="hide-mobile" style={{
+              fontFamily: "'Outfit', sans-serif", fontSize: 9,
               color: theme.greenLight, letterSpacing: "2px", textTransform: "uppercase"
             }}>
               Del campo a tu mesa
@@ -40,8 +43,8 @@ export default function Navbar({
           </div>
         </div>
 
-        {/* Links */}
-        <div style={{ display: "flex", alignItems: "center", gap: 32, marginRight: 32 }}>
+        {/* Links — ocultos en móvil */}
+        <div className="hide-mobile" style={{ display: "flex", alignItems: "center", gap: 32, marginRight: 24 }}>
           {[["home", "Inicio"]].map(([v, label]) => (
             <span
               key={v}
@@ -60,16 +63,16 @@ export default function Navbar({
         </div>
 
         {/* Auth + Cart */}
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
           {usuario ? (
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginRight: 4 }}>
-
-              {/* Avatar — muestra logo si existe, inicial si no */}
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              {/* Avatar */}
               <div style={{
-                width: 34, height: 34, borderRadius: "50%",
+                width: 32, height: 32, borderRadius: "50%",
                 background: theme.green, overflow: "hidden",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontFamily: "'Outfit', sans-serif", fontSize: 13, fontWeight: 700, color: "white"
+                fontFamily: "'Outfit', sans-serif", fontSize: 13, fontWeight: 700, color: "white",
+                flexShrink: 0
               }}>
                 {usuario.logo
                   ? <img src={usuario.logo} alt="avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
@@ -77,7 +80,7 @@ export default function Navbar({
                 }
               </div>
 
-              <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 14, color: theme.brownLight, fontWeight: 500 }}>
+              <span className="hide-mobile" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 14, color: theme.brownLight, fontWeight: 500 }}>
                 Hola, {usuario.nombre}
               </span>
 
@@ -85,8 +88,9 @@ export default function Navbar({
                 onClick={onSalir}
                 style={{
                   background: "transparent", border: `1.5px solid ${theme.creamDark}`,
-                  padding: "6px 14px", borderRadius: 50, cursor: "pointer",
-                  fontFamily: "'Outfit', sans-serif", fontSize: 12, color: theme.gray
+                  padding: "6px 12px", borderRadius: 50, cursor: "pointer",
+                  fontFamily: "'Outfit', sans-serif", fontSize: 12, color: theme.gray,
+                  whiteSpace: "nowrap"
                 }}
               >
                 Salir
@@ -98,8 +102,9 @@ export default function Navbar({
                 onClick={() => setAuthModal("login")}
                 style={{
                   background: "transparent", border: `1.5px solid ${theme.creamDark}`,
-                  padding: "8px 18px", borderRadius: 50, cursor: "pointer",
-                  fontFamily: "'Outfit', sans-serif", fontSize: 13, color: theme.brownLight
+                  padding: "7px 12px", borderRadius: 50, cursor: "pointer",
+                  fontFamily: "'Outfit', sans-serif", fontSize: 12, color: theme.brownLight,
+                  whiteSpace: "nowrap"
                 }}
               >
                 Iniciar sesión
@@ -108,8 +113,9 @@ export default function Navbar({
                 onClick={() => setAuthModal("register")}
                 style={{
                   background: theme.green, border: "none",
-                  padding: "8px 18px", borderRadius: 50, cursor: "pointer",
-                  fontFamily: "'Outfit', sans-serif", fontSize: 13, color: "white", fontWeight: 600
+                  padding: "7px 12px", borderRadius: 50, cursor: "pointer",
+                  fontFamily: "'Outfit', sans-serif", fontSize: 12, color: "white", fontWeight: 600,
+                  whiteSpace: "nowrap"
                 }}
               >
                 Registrarse
@@ -122,13 +128,13 @@ export default function Navbar({
             onClick={() => setCartOpen(true)}
             style={{
               position: "relative", background: theme.green, border: "none",
-              padding: "10px 20px", borderRadius: 50, cursor: "pointer",
-              display: "flex", alignItems: "center", gap: 8,
-              transition: "all 0.2s", marginLeft: 4
+              padding: "8px 14px", borderRadius: 50, cursor: "pointer",
+              display: "flex", alignItems: "center", gap: 6,
+              transition: "all 0.2s", flexShrink: 0
             }}
           >
             <span style={{ fontSize: 16 }}>🧺</span>
-            <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 14, fontWeight: 500, color: "white" }}>
+            <span className="hide-mobile" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 14, fontWeight: 500, color: "white" }}>
               Canasta
             </span>
             {cartCount > 0 && (

@@ -15,25 +15,24 @@ const getLS = (key, fallback = null) => {
 export default function HomePage({ setView, usuario, setAuthModal }) {
   const esConsumidor = usuario?.rol === "consumidor";
 
-  const [granjas, setGranjas]   = useState([]);
+  const [granjas, setGranjas]     = useState([]);
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
-    // Leer granjas: cada agricultor registrado es una "granja"
-    const usuarios   = getLS("cf_usuarios", []);
+    const usuarios     = getLS("cf_usuarios", []);
     const agricultores = usuarios.filter(u => u.rol === "agricultor");
     setGranjas(agricultores);
-
-    // Leer productos guardados
     setProductos(getLS("cf_productos", []));
   }, []);
 
   return (
-    <div>
+    <div style={{ width: "100%", overflowX: "hidden" }}>
+
       {/* Hero */}
       <section style={{
         minHeight: "88vh", display: "flex", alignItems: "center",
         position: "relative", overflow: "hidden",
+        width: "100%", boxSizing: "border-box",
         background: `linear-gradient(135deg, #1A3A0A 0%, ${theme.green} 50%, ${theme.greenMid} 100%)`
       }}>
         <div style={{
@@ -47,7 +46,11 @@ export default function HomePage({ setView, usuario, setAuthModal }) {
         }}>
           🌿
         </div>
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "80px 24px", position: "relative", zIndex: 1 }}>
+        <div style={{
+          maxWidth: 1200, margin: "0 auto",
+          padding: "60px 20px", position: "relative", zIndex: 1,
+          width: "100%", boxSizing: "border-box"
+        }}>
           <div style={{ maxWidth: 640, animation: "slideUp 0.7s ease both" }}>
             <div style={{
               display: "inline-flex", alignItems: "center", gap: 8,
@@ -62,7 +65,7 @@ export default function HomePage({ setView, usuario, setAuthModal }) {
 
             <h1 style={{
               fontFamily: "'Crimson Pro', serif",
-              fontSize: "clamp(40px, 6vw, 72px)",
+              fontSize: "clamp(36px, 6vw, 72px)",
               fontWeight: 400, color: "white", lineHeight: 1.1, marginBottom: 24
             }}>
               Alimentos frescos<br />
@@ -78,13 +81,14 @@ export default function HomePage({ setView, usuario, setAuthModal }) {
             </p>
 
             <div style={{
-              display: "flex", gap: 32, marginTop: 48, paddingTop: 32,
-              borderTop: "1px solid rgba(255,255,255,0.15)"
+              display: "flex", gap: 16, marginTop: 48, paddingTop: 32,
+              borderTop: "1px solid rgba(255,255,255,0.15)",
+              flexWrap: "wrap"
             }}>
               {esConsumidor ? (
                 <>
                   <button onClick={() => setView("shop")} style={{
-                    padding: "14px 32px", borderRadius: 50,
+                    padding: "14px 28px", borderRadius: 50,
                     background: theme.terracotta, color: "white",
                     border: "none", cursor: "pointer",
                     fontFamily: "'Outfit', sans-serif", fontSize: 15, fontWeight: 600,
@@ -92,7 +96,7 @@ export default function HomePage({ setView, usuario, setAuthModal }) {
                     Ver tienda →
                   </button>
                   <button onClick={() => setView("farms")} style={{
-                    padding: "14px 32px", borderRadius: 50,
+                    padding: "14px 28px", borderRadius: 50,
                     background: "transparent", color: "white",
                     border: "2px solid rgba(255,255,255,0.5)", cursor: "pointer",
                     fontFamily: "'Outfit', sans-serif", fontSize: 15,
@@ -103,7 +107,7 @@ export default function HomePage({ setView, usuario, setAuthModal }) {
               ) : (
                 <>
                   <button onClick={() => setAuthModal("register")} style={{
-                    padding: "14px 32px", borderRadius: 50,
+                    padding: "14px 28px", borderRadius: 50,
                     background: theme.terracotta, color: "white",
                     border: "none", cursor: "pointer",
                     fontFamily: "'Outfit', sans-serif", fontSize: 15, fontWeight: 600,
@@ -111,7 +115,7 @@ export default function HomePage({ setView, usuario, setAuthModal }) {
                     Comenzar gratis →
                   </button>
                   <button onClick={() => setAuthModal("login")} style={{
-                    padding: "14px 32px", borderRadius: 50,
+                    padding: "14px 28px", borderRadius: 50,
                     background: "transparent", color: "white",
                     border: "2px solid rgba(255,255,255,0.5)", cursor: "pointer",
                     fontFamily: "'Outfit', sans-serif", fontSize: 15,
@@ -126,7 +130,7 @@ export default function HomePage({ setView, usuario, setAuthModal }) {
             {esConsumidor && (
               <div style={{
                 marginTop: 32, background: "rgba(255,255,255,0.08)",
-                borderRadius: 20, padding: "24px 28px",
+                borderRadius: 20, padding: "24px 20px",
                 border: "1px solid rgba(255,255,255,0.15)"
               }}>
                 <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,0.5)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 6 }}>
@@ -146,7 +150,7 @@ export default function HomePage({ setView, usuario, setAuthModal }) {
                     { emoji: "🍯", label: "Miel" },
                   ].map(({ emoji, label }) => (
                     <button key={label} onClick={() => setView("shop")} style={{
-                      padding: "8px 18px", borderRadius: 50,
+                      padding: "8px 16px", borderRadius: 50,
                       border: "1.5px solid rgba(255,255,255,0.3)",
                       background: "rgba(255,255,255,0.1)", cursor: "pointer",
                       fontFamily: "'Outfit', sans-serif", fontSize: 13,
@@ -163,11 +167,11 @@ export default function HomePage({ setView, usuario, setAuthModal }) {
         </div>
       </section>
 
-      {/* ── Granjas registradas (solo consumidor logueado) ── */}
+      {/* Granjas registradas (solo consumidor logueado) */}
       {esConsumidor && granjas.length > 0 && (
-        <section style={{ background: "white", padding: "64px 24px" }}>
+        <section style={{ background: "white", padding: "64px 20px", boxSizing: "border-box" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 32 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 32, flexWrap: "wrap", gap: 16 }}>
               <div>
                 <p className="section-label">Productores activos</p>
                 <h2 className="section-title" style={{ marginTop: 8 }}>Granjas en la plataforma</h2>
@@ -181,7 +185,7 @@ export default function HomePage({ setView, usuario, setAuthModal }) {
               </button>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 20 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 20 }}>
               {granjas.map(granja => (
                 <div key={granja.id} style={{
                   background: theme.cream, borderRadius: 20, padding: "24px",
@@ -192,7 +196,6 @@ export default function HomePage({ setView, usuario, setAuthModal }) {
                   onMouseLeave={e => { e.currentTarget.style.borderColor = `${theme.greenLight}33`; e.currentTarget.style.boxShadow = "none"; }}
                   onClick={() => setView("farms")}
                 >
-                  {/* Avatar / logo */}
                   <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
                     <div style={{
                       width: 52, height: 52, borderRadius: "50%",
@@ -216,7 +219,6 @@ export default function HomePage({ setView, usuario, setAuthModal }) {
                     </div>
                   </div>
 
-                  {/* Tags de productos */}
                   {granja.tags?.length > 0 && (
                     <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 14 }}>
                       {granja.tags.slice(0, 4).map(tag => (
@@ -247,11 +249,11 @@ export default function HomePage({ setView, usuario, setAuthModal }) {
         </section>
       )}
 
-      {/* ── Productos disponibles (solo consumidor) ── */}
+      {/* Productos disponibles (solo consumidor) */}
       {esConsumidor && productos.length > 0 && (
-        <section style={{ background: theme.cream, padding: "64px 24px" }}>
+        <section style={{ background: theme.cream, padding: "64px 20px", boxSizing: "border-box" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 32 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 32, flexWrap: "wrap", gap: 16 }}>
               <div>
                 <p className="section-label">Disponible ahora</p>
                 <h2 className="section-title" style={{ marginTop: 8 }}>Productos frescos</h2>
@@ -265,7 +267,7 @@ export default function HomePage({ setView, usuario, setAuthModal }) {
               </button>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: 16 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))", gap: 16 }}>
               {productos.slice(0, 8).map(p => (
                 <div key={p.id} onClick={() => setView("shop")} style={{
                   background: "white", borderRadius: 16, padding: "20px 16px",
@@ -295,13 +297,13 @@ export default function HomePage({ setView, usuario, setAuthModal }) {
       )}
 
       {/* How it works */}
-      <section style={{ background: "white", padding: "80px 24px" }}>
+      <section style={{ background: "white", padding: "80px 20px", boxSizing: "border-box" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 56 }}>
             <p className="section-label">Cómo funciona</p>
             <h2 className="section-title" style={{ marginTop: 8 }}>Del productor a tu hogar</h2>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 40 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 40 }}>
             {steps.map(({ icon, step, title, desc }) => (
               <div key={step} style={{ textAlign: "center" }}>
                 <div style={{
@@ -328,7 +330,7 @@ export default function HomePage({ setView, usuario, setAuthModal }) {
       </section>
 
       {/* CTA */}
-      <section style={{ padding: "80px 24px", background: theme.creamDark, textAlign: "center" }}>
+      <section style={{ padding: "80px 20px", background: theme.creamDark, textAlign: "center", boxSizing: "border-box" }}>
         <div style={{ maxWidth: 560, margin: "0 auto" }}>
           <div style={{ fontSize: 56, marginBottom: 20 }}>🌱</div>
           <h2 className="section-title" style={{ marginBottom: 16 }}>¿Listo para comer mejor?</h2>
@@ -348,7 +350,7 @@ export default function HomePage({ setView, usuario, setAuthModal }) {
       </section>
 
       {/* Footer */}
-      <footer style={{ background: theme.green, padding: "40px 24px", color: "rgba(255,255,255,0.6)" }}>
+      <footer style={{ background: theme.green, padding: "40px 20px", color: "rgba(255,255,255,0.6)", boxSizing: "border-box" }}>
         <div style={{
           maxWidth: 1200, margin: "0 auto",
           display: "flex", justifyContent: "space-between", alignItems: "center",
